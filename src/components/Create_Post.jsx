@@ -1,6 +1,32 @@
+import { useContext, useRef } from "react";
+import { PostList } from "../store/Post_List_Store";
+
 const Create_Post = () => {
+  
+  const { addPost } = useContext(PostList)
+
+   const userIdElement = useRef();
+   const photoElement = useRef();
+   const captionElement = useRef();
+   const tagsElement = useRef();
+
+  const handleSubmit = (event)=>{
+    event.preventDefault()
+    const userId = userIdElement.current.value;
+    const photo = photoElement.current.value;
+    const caption = captionElement.current.value;
+    const tags = tagsElement.current.value.split(" "); 
+
+    userIdElement.current.value ="";
+    photoElement.current.value ="";
+    captionElement.current.value ="";
+    tagsElement.current.value =""
+
+    addPost(userId , photo , caption , tags)
+  }
+
   return (
-    <form action="" className="px-3" id="form" name="formaname">
+    <form action="" className="px-3" onSubmit={handleSubmit}>
       <div className="">
         <div className="border-b border-gray-900/10 pb-12">
           <div className="">
@@ -34,6 +60,9 @@ const Create_Post = () => {
                       id="file-upload"
                       name="file-upload"
                       type="file"
+                      required
+                      accept="image/png , image/jpeg , image/jpg"
+                      ref={photoElement}
                       className="sr-only"
                     />
                   </label>
@@ -59,6 +88,7 @@ const Create_Post = () => {
                     type="text"
                     name="username"
                     id="username"
+                    ref={userIdElement}
                     className="block flex-1 border rounded-md bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Username"
                   />
@@ -77,6 +107,7 @@ const Create_Post = () => {
                   id="about"
                   name="about"
                   rows="3"
+                  ref={captionElement}
                   placeholder="Write a few sentences about your Post"
                   className="block w-full placeholder:text-gray-400 placeholder:text-xs px-2 rounded-md border py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 ></textarea>
@@ -95,15 +126,15 @@ const Create_Post = () => {
                     type="text"
                     name="username"
                     id="hastags"
+                    ref={tagsElement}
                     className="block flex-1 border rounded-md bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="#tags"
                   />
                 </div>
               </div>
             </div>
-
           </div>
-          <button className="px-5 mt-3 py-2 bg-blue-600 rounded-md text-white">Post</button>
+          <button className="px-5 mt-3 py-2 bg-blue-600 rounded-md text-white" type="submit" >Post</button>
         </div>
       </div>
     </form>
