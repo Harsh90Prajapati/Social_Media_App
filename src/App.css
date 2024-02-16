@@ -1,0 +1,13 @@
+
+
+
+
+.slider{
+    height: 90vh;
+}
+
+@media screen and (max-width: 600px){
+    .slider{
+        display: none;
+    }
+}
